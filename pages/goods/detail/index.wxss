@@ -790,7 +790,7 @@ video{
 .option-picker-inner {
   background: #fff;
   border-top: 2rpx solid #eee;
-   border-bottom: 2rpx solid #eee;
+  border-bottom: 1rpx solid #eee;
   box-shadow: 0 0 8rpx rgba(0, 0, 0, 0);
 }
 
@@ -1953,13 +1953,18 @@ video{
 
 
 .zcx_list{
-   background: #000;
+  width:100%;
+  display: flex;
+  flex-direction: row;
 }
 .zcx_list_item{
-  display: inline-block;
+  border:none;
+  box-shadow: none;
 }
 .zcx_list_item image{
   display: block;
+  border:none;
+  box-shadow: none;
 }
 .rightline{
   position: relative;

@@ -1610,6 +1610,7 @@ Page({
     let keylists = this.data.keylists || []
     let systeminfo = wx.getStorageSync('systemInfo')
     let screenWidth = systeminfo.screenWidth
+    console.log(systeminfo)
     let ratio = screenWidth / 750
 
     console.log(ratio)
@@ -1617,7 +1618,7 @@ Page({
     keylists.push({
       id: id,
       name: keyname,
-      width: detail.width * ratio,
+      width: (detail.width * ratio).toFixed(2),
       height: detail.height * ratio
     })
 
