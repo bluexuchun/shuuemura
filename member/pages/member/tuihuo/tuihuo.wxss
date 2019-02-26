@@ -23,8 +23,8 @@ page{
 
 }
 .logo image{
-  width:335rpx;
-  height: 59rpx;
+  width:750rpx;
+  height: 187rpx;
 }
 
 .policy-inner{
