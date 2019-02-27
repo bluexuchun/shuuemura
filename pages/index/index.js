@@ -142,15 +142,15 @@ Page({
 
   },
 
-  dingzhifuwu:function(e){
-    console.log(e.target.dataset.index);
-    var id = e.target.dataset.index;
-    if(id==4){
-      wx.navigateTo({
-        url: '../christmas/christmas',
-      })
-    }
-  },
+  // dingzhifuwu:function(e){
+  //   console.log(e.target.dataset.index);
+  //   var id = e.target.dataset.index;
+  //   if(id==4){
+  //     wx.navigateTo({
+  //       url: '../christmas/christmas',
+  //     })
+  //   }
+  // },
 
     /* 获取首页信息 */
     getShop: function () {
@@ -628,7 +628,6 @@ Page({
     var phone = e.currentTarget.dataset.phone
     var appid = e.currentTarget.dataset.appid
     var appurl = e.currentTarget.dataset.appurl
-    console.log(url)
     if (url.includes('?cate')) {
       let params = url.split('?')
       if (params[1].includes('cate')) {

@@ -977,6 +977,7 @@ Page({
   },
   // 默认选择
   mspecsTap: function(event, $this) {
+    console.log(event)
     var id=event.id;
     var specs = $this.data.specs;
     console.log(specs,);

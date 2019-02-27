@@ -790,7 +790,7 @@ video{
 .option-picker-inner {
   background: #fff;
   border-top: 2rpx solid #eee;
-  border-bottom: 1rpx solid #eee;
+  border-bottom: 1rpx solid #000;
   box-shadow: 0 0 8rpx rgba(0, 0, 0, 0);
 }
 

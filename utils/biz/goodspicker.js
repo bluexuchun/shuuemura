@@ -275,7 +275,7 @@ module.exports = {
 
 
     core.get('goods/get_picker', { crydata: data }, function (result) {
-      console.log(result,'result');
+      console.log(result.morenSel[0].id,'result');
       if (!result.goods.presellstartstatus && result.goods.presellstartstatus != undefined && result.goods.ispresell == '1'){
         foxui.toast($this, result.goods.presellstatustitle);
         return;
@@ -285,10 +285,11 @@ module.exports = {
         return;
       }
       var options = result.options;
+      console.log('options', result.morenSel)
       if(page=='goodsdetail'){
         console.log('调试bug',options)
+        console.log('默认',result.morenSel)
         $this.setData({
-          
           morenSel: result.morenSel,
           pickerOption: result,
           canbuy: $this.data.goods.canbuy,
@@ -302,6 +303,7 @@ module.exports = {
         } else {
           var total = $this.data.total
         }    
+        console.log($this.data)
       }else{
         console.log('其他')
         $this.setData({
@@ -311,16 +313,12 @@ module.exports = {
           options: options,
           minpicker: page,
         });
-        // var tempdata = $this.data.goods;
-        // tempdata.optionid = false;
-        // var goods = $this.data.goods;
        
         $this.setData({
           optionid: false,
           specsData: [],
           specs: []
         })
-        console.log($this.data.specsData)
         
         if (result.goods.minbuy != 0 && $this.data.total < result.goods.minbuy) {
           var total = result.goods.minbuy
@@ -358,15 +356,15 @@ module.exports = {
         }
       }
       for (let i = 0; i < result.morenSel.length; i++) {
-        result.morenSel[i].id =  result.specs[0].items[0].id //此处是强制加了一个默认的morensel的id
-          $this.mspecsTap(result.morenSel[i], $this);
-      
-        
+        // result.morenSel[i].id =  result.specs[0].items[0].id //此处是强制加了一个默认的morensel的id
+        $this.mspecsTap(result.morenSel[i], $this);
       };
-      // // 根据默认值去判断轮播图 数组
+      // 根据默认值去判断轮播图 数组
       console.log($this.data.goodsthumbs);
       var morenArr=[];
       for(var  k=0;k<result.morenSel.length;k++){
+        console.log(result.morenSel[k])
+        console.log(k)
         morenArr.push(result.morenSel[k].id);
       } 
       
@@ -393,6 +391,8 @@ module.exports = {
           console.log(goods);
         }
       }
+
+      console.log($this.data)
     });
   },
   //此方法处理sort方法判断的时候,根据第一个数字的大小来排序导致错误.例如 1456<945; author by sunc;
@@ -410,9 +410,11 @@ module.exports = {
     var selid=event.target.dataset.selid;
     var guigeid=event.target.dataset.id;
     var specs = $this.data.specs;
+    console.log(specs)
     var idx = event.target.dataset.idx
     var timu=event.target.dataset.timu;
-    specs[idx] ={id: event.target.dataset.id, title: event.target.dataset.title ,timu:timu};
+    specs[idx] = {id: event.target.dataset.id, title: event.target.dataset.title ,timu:timu};
+    console.log(specs)
     var title ='';
     var optionTitle = '';
     var optionids = [];
@@ -446,7 +448,9 @@ module.exports = {
         }
       }
     }
+    console.log(specs)
     specs.forEach(function (e){
+      console.log(e)
       title += e.title + ';';
       // optionTitle += e.id + '_';
       optionids.push(e.id);
@@ -535,6 +539,7 @@ module.exports = {
       specsData:specs,
       specsTitle: title,
     });
+    console.log($this.data);
   },
 
 }

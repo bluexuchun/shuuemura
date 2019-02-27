@@ -1,7 +1,7 @@
 <import src="/utils/wxParse/wxParse.wxml" />
-<view class="{{isIpx?'fui-iphonex-button':''}}"></view>
+<!-- <view class="{{isIpx?'fui-iphonex-button':''}}"></view> -->
 <loading wx:if="{{ !show }}">加载中...</loading>
-<view class="page footer {{paddingb}}" wx:if="{{ show }}" style="padding-bottom:100rpx;">
+<view class="page footer {{paddingb}}" wx:if="{{ show }}" style="padding-bottom:0rpx;">
   <view class="nav" wx:if="{{ list.showTab && !list.isonlyverifygoods}}">
     <view class="{{ data.dispatchtype==0?'red':'default' }}" bindtap="dispatchtype" data-type="0">快递配送</view>
     <view class="{{ data.dispatchtype==1?'red':'default' }}" wx:if="{{ list.iscycelbuy != 1 }}" bindtap="dispatchtype" data-type="1">上门自提</view>
@@ -159,7 +159,7 @@
           </view>
  <view class='customItem-color' style='display:flex;justify-content:flex-start;margin-top:18rpx' wx:if='{{val.spec_types.type == 3}}'>
             <view class="color-item">
-              <image class="color-num" src="{{val.spec_img}}" style='border-radius:50%;'></image>
+              <!-- <image class="color-num" src="{{val.spec_img}}" style='border-radius:50%;'></image> -->
               <text class="color-num-text">{{ val.optiontitle }}</text>
             </view>
           </view>
@@ -224,9 +224,9 @@
           <view class="gift-title extraGift" style='margin-top:57rpx;font-size:30rpx;text-align:center;height:auto;line-height:30rpx;border:none;'>
              尊享满额礼
           </view>
-         <view style="margin-top:13rpx;font-size:18rpx;line-height:18rpx;display:{{gift.restnum == 'free' ? 'none' : ''}};text-align:center">
+         <!-- <view style="margin-top:13rpx;font-size:18rpx;line-height:18rpx;display:{{gift.restnum == 'free' ? 'none' : ''}};text-align:center">
          再加购{{giftsuperlist[0].restnum}}元，可获得{{giftsuperlist[0].nextnum}}件体验礼
-         </view>
+         </view> -->
     </view> 
 
 
@@ -243,8 +243,9 @@
             <view class="extra-gifts-item gifts-items" wx:for="{{gift.giftgoodsid}}" wx:for-index="idx" wx:key="{{item.id}}" data-list-type="extraGiftList" data-idx="{{idx}}" style='margin-right:10rpx;'>
               <view wx:if="{{item.goods_number<=0}}" class="mask"></view>
               <view data-list-type="{{index}}" data-idx="{{idx}}" bindtap="selectPro" style='width:150rpx;height:150rpx;'>
-                <view class="top checkbox {{ item.selected == 'checked' ? 'checked': '' }}">
-                  <icon></icon>
+                <view class="top checkbox">
+                <!-- <view class="top checkbox {{ item.selected == 'checked' ? 'checked': '' }}"> -->
+                  <!-- <icon></icon> -->
                   <image class="detail-img" src='{{item.thumb}}' mode='widthFix' style="width:100%;height:60px;"></image>
                 </view>
                 <view class='bottom' style='margin:auto;width:127rpx;text-align:center;display:flex;align-items:center;justify-content:center'>

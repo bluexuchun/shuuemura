@@ -26,7 +26,8 @@
           <view class='customItem-color'>
             <view class="color-item">
              <!-- wx:if="{{item.isShow}}" wx:key="{{items.id}}" wx:for-item="items"  wx:for="{{item.specificationList}} -->
-              <image class="color-num" src="{{item.spec_img}}" ></image>
+              <!-- <image wx:if="{{item.spec_types.type == 3}}" class="color-num" src="{{item.spec_img}}" ></image> -->
+              <view wx:if="{{item.spec_types.type == 2}}" class="color-num" style="width:30rpx;height:30rpx;border-radius:50%;background:{{item.spec_types.typeword}}" ></view>
               <!-- wx:for="{{item.specificationList}}" wx:for-item="items" wx:key="{{items.id}}" -->
               <text class="color-num-text" >{{item.optionname}}</text>
             </view>

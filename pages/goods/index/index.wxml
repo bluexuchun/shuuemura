@@ -52,9 +52,9 @@
       <view class="icon"></view>
       <view class="text">正在加载</view>
     </view>
-    <view class="fui-loading empty" wx:if="{{list.length==total&&total>0 &&currentTab != '-1' }}">
+    <!-- <view class="fui-loading empty" wx:if="{{list.length==total&&total>0 &&currentTab != '-1' }}">
       <view class="text">没有更多了</view>
-    </view>
+    </view> -->
     <view class="fui-loading empty" wx:if="{{total<=0 && !loading}}">
       <view class="text">暂时没有任何商品</view>
     </view>

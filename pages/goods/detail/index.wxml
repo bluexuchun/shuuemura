@@ -488,7 +488,7 @@ indicator-dots="{{true}}" circular="{{circular}}" style="width:100%;height:{{adv
     <!--商品详情end-->
 
     <!-- 显示口红颜色的标签切换 -->
-    <view style='width:100%' wx:if="{{table.detail_status=='1'}}">
+    <!-- <view style='width:100%' wx:if="{{table.detail_status=='1'}}">
       <view class='toggle'>
         <view class='' style='width:100%;flex-wrap: nowrap; display: flex;flex-direction: row;justify-content: space-around;' scroll-x="true">
           <block wx:for="{{table.detail_title}}" wx:for-index='tid' wx:key='index'>
@@ -499,6 +499,12 @@ indicator-dots="{{true}}" circular="{{circular}}" style="width:100%;height:{{adv
       <view style='width:100%'>
           <image  bindload="imageLoad" data-type="kouhong" style='width:100%' mode="widthFix" src='{{khUrl}}' bindload="imageLoad"></image>
       </view>
+    </view> -->
+    <!-- 植村秀的推荐图 -->
+    <view style='width:100%' wx:if="{{table.detail_status=='1'}}">
+      <navigator style='width:100%' wx:for="{{table.detail_pic}}" wx:key='index' url="{{table.detail_title[index]}}">
+        <image data-type="kouhong" mode="widthFix" src='{{item}}' style="display:block;width:100%;"></image>
+      </navigator>
     </view>
 
     <!-- 植村秀推荐 -->
