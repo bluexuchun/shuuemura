@@ -72,6 +72,8 @@ Page({
             res.detail.userInfo.openid = auth_res.openId
             res.detail.userInfo.id = auth_res.id
             res.detail.userInfo.uniacid = auth_res.uniacid
+            wx.setStorageSync("sessionid",auth_res.sessionid)
+            core.getToken(this)
 
             app.setCache('userinfo', res.detail.userInfo, 7200);
             app.setCache('userinfo_openid', res.detail.userInfo.openid);

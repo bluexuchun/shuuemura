@@ -123,6 +123,23 @@ Page({
 
 
       if (list.error == 0) {
+        console.log('list',list)
+
+        // 植村秀赠品专属
+        core.get('order/create/gifts',{
+          goodsprice:list.realprice
+        },function(gift){
+          console.log(gift)
+          $this.setData({
+            zcxgifttips:gift.full,
+            zcxgiftlists:gift.gift_list,
+          })
+        })
+
+
+
+
+
         // 循环尊享体验礼
         // 循环尊享体验礼
         list.super.map((v, k) => {
@@ -580,10 +597,8 @@ Page({
   submit: function(e) {
     var that = this;
     let formid = e.detail.formId
-    console.log(formid)
-    console.log(this.data.list.goods);
     let giftlist = this.data.giftlist.giftgoodsid,
-      giftsuperlist = this.data.giftsuperlist;
+      giftsuperlist = this.data.zcxgiftlists;
 
     let giftlistid = [],
       giftsuperlistid = [];
@@ -593,16 +608,14 @@ Page({
       })
     }
     
-
-    giftsuperlist.map((v, i) => {
-      v.giftgoodsid.map((q, w) => {
-        if (q.selected) {
-          if (q.selected == 'checked') {
-            giftsuperlistid.push(q.id)
-          }
-        }
-      })
-    })
+    if (that.data.zcxgifttips){
+      if (that.data.zcxgifttips.ismin != 1) {
+        giftsuperlist.map((v, i) => {
+          giftsuperlistid.push(v.id)
+        })
+      }
+    }
+    
 
 
 

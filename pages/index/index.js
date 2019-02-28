@@ -106,19 +106,30 @@ Page({
 
   iChange:function(e){
     console.log(e);
-    var value=e.detail.value;
+    var value = e.detail.value;
     this.setData({
       searchValue:value
     })
     
   },
-  searchBtn:function(){
+  searchBtn:function(e){
+    console.log(e)
     var that=this;
+    let keyword = e.currentTarget.dataset.value
+    let keywords
+    if(that.data.searchValue){
+      keywords = that.data.searchValue
+    }else{
+      that.setData({
+        searchValue:keyword
+      })
+      keywords = keyword
+    }
     var arr='';
     wx.showLoading({
       title: '搜索中',
     })
-    core.get('goods/getlistbySearch', { keywords:that.data.searchValue},function(res){
+    core.get('goods/getlistbySearch', { keywords: keywords},function(res){
       wx.hideLoading();
        console.log(res);
 

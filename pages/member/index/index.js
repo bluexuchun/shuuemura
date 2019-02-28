@@ -90,7 +90,7 @@ Page({
     },
     service:function(e){
       wx.makePhoneCall({
-        phoneNumber: '4008206362',
+        phoneNumber: '4008206499',
       })
     },
     onShow: function(){

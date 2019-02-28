@@ -31,8 +31,13 @@ Page({
         app.url(options);
     },
     onShow:function () {
-        this.get_list();
         var $this = this;
+        core.get('auth/get_token', {
+          sessionid: wx.getStorageSync("sessionid")
+        }, function (data) {
+          wx.setStorageSync("tokenId", data.token)
+          $this.get_list();
+        })
         var isIpx = app.getCache('isIpx');
         if (isIpx) {
           $this.setData({
@@ -50,15 +55,17 @@ Page({
     },
     get_list: function () {
         var $this = this;
-        core.get('order/detail', $this.data.options, function (list) {
-          console.log(list);
+        let useropenid = wx.getStorageSync('tokenId') + app.getCache('userinfo_openid')
+        core.get('order/detail', 
+          { ...$this.data.options, sessionid: wx.getStorageSync("sessionid"), token: useropenid}
+        , function (list) {
+          if(list.error == '-7'){
+              core.toast(list.message, 'none');
+          }
           if (list.error>0){
             if (list.error != 50000) {
               core.toast(list.message, 'loading');
             }
-            wx.redirectTo({
-              url: '/pages/order/index'
-            })
           }
             if(list.nogift[0].fullbackgoods != undefined ){
             	var fullbackratio = list.nogift[0].fullbackgoods.fullbackratio;

@@ -23,6 +23,7 @@ Page({
         cancelindex:0
     },
     onLoad: function (options) {
+       let $this = this
         app.checkAuth();
         // 页面初始化 options为页面跳转所带来的参数
         this.setData({
@@ -30,12 +31,18 @@ Page({
             status: options.status || ''
         });
         app.url(options);
-        this.get_list();
+        core.get('auth/get_token', {
+          sessionid: wx.getStorageSync("sessionid")
+        }, function (data) {
+          wx.setStorageSync("tokenId", data.token)
+          $this.get_list();
+        })
     },
     get_list: function () {
         var $this = this;
         $this.setData({loading: true});
-        core.get('order/get_list', {page: $this.data.page, status: $this.data.status, merchid: 0}, function (list) {
+        let useropenid = wx.getStorageSync('tokenId') + app.getCache('userinfo_openid')
+      core.get('order/get_list', { page: $this.data.page, status: $this.data.status, merchid: 0, sessionid: wx.getStorageSync('sessionid'), token: useropenid}, function (list) {
           console.log(list);
             if (list.error==0){
                 list.list.map((v,i) =>{

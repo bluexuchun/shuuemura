@@ -26,11 +26,18 @@ module.exports = {
     ],
     cancel: function (id, index,url) {
         var $this=this,remark = this.cancelArray[index];
-        core.post('order/op/cancel', {id: id, remark: remark}, function (data) {
+        core.get('auth/get_token', {
+          sessionid: wx.getStorageSync("sessionid")
+        }, function (data) {
+          wx.setStorageSync("tokenId", data.token)
+          let useropenid = wx.getStorageSync('tokenId') + app.getCache('userinfo_openid')
+          core.post('order/op/cancel', { id: id, remark: remark, sessionid: wx.getStorageSync("sessionid"), token: useropenid }, function (data) {
             if (data.error == 0) {
-                $this.url(url);
+              $this.url(url);
             }
-        }, true);
+          }, true);
+        })
+        
     },
     delete: function (id, userdeleted,url,self) {
         console.log('123')

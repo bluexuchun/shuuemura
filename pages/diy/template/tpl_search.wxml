@@ -29,7 +29,7 @@
       <view class="flex-head-search" id="searchBar" style='padding:0 20rpx;display: flex;align-items: center;justify-content: space-between;position:relative;color:{{diyitem.style.color}};background:{{diyitem.style.background}};border-style:{{diyitem.style.searchstyle}};text-align:{{diyitem.style.textalign}};border-radius:{{diyitem.style.searchstyle =="radius"?"10rpx":(diyitem.style.searchstyle=="round"?"50rpx":"")}};border:6rpx solid {{diyitem.style.inputbackground}}'>
        
         <input class='searchbox'  placeholder-class="phcolor" bindinput='iChange' placeholder="{{diyitem.params.placeholder}}" placeholder-style='color:{{diyitem.style.color}}'></input>
-        <view class='btn-search' bindtap='searchBtn'>
+        <view class='btn-search' bindtap='searchBtn' data-value="{{diyitem.params.placeholder}}">
    <text class='iconfont icon-sousuo'  style='width:48rpx;height:48rpx;color:{{diyitem.style.iconcolor}}'></text>
 
           

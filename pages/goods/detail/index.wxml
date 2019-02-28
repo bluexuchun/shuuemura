@@ -1,4 +1,4 @@
-<view class="{{isIpx?'fui-iphonex-button':''}}"></view>
+<!-- <view class="{{isIpx?'fui-iphonex-button':''}}"></view> -->
 <import src="/utils/wxParse/wxParse.wxml" />
 <loading wx:if="{{ !show }}">加载中...</loading>
 <!-- <view wx:else>
@@ -24,7 +24,7 @@
 </view>
 <view class="hint" wx:if="{{show && !limits}}" bindtap="hintclick">您还未授权无法查看商品完整信息，点击可重新获取授权喔~</view>
 <!-- <button class="hint" wx:if="{{show && !limits}}" open-type='getUserInfo'>您还未授权无法查看商品完整信息，点击可重新获取授权喔~</button> -->
-<view class="page comment-block" wx:if="{{show}}" style="background:#fff;">
+<view class="page comment-block" wx:if="{{show}}" style="background:#fff;padding-bottom:120rpx;">
   <!--商品start-->
   <view class="goods-detail-goods" wx:if="{{showgoods}}">
     <!-- 店铺装修start -->
@@ -509,8 +509,8 @@ indicator-dots="{{true}}" circular="{{circular}}" style="width:100%;height:{{adv
 
     <!-- 植村秀推荐 -->
      <view class='zcx_list' wx:if="{{goods.detail_dp}}">
-        <view class='zcx_list_item' wx:for='{{goods.detail_dp}}' wx:key='index' data-link='{{goods.detail_xcxlink[index]}}' bindtap='linkTo' style="width:{{keylists[index].width}}px;height:{{keylists[index].height}}px;overflow:hidden;position:relative;">
-          <image src='{{item}}' data-id='{{index}}' data-parent="dpimg" bindload="comimgcal" style="width:{{keylists[index].width}}px;height:{{keylists[index].height}}px;position:absolute;top:0px;left:0px;z-index:999;"></image>
+        <view  wx:for='{{goods.detail_dp}}' wx:key='index' data-link='{{goods.detail_xcxlink[index]}}' bindtap='linkTo' style="flex:1;">
+          <image class='zcx_list_item' src='{{item}}' data-id='{{index}}' data-parent="dpimg" mode='widthFix' style="width:100%;display:block;"></image>
         </view>
    </view>
      <!-- 植村秀推荐 -->
@@ -677,7 +677,7 @@ indicator-dots="{{true}}" circular="{{circular}}" style="width:100%;height:{{adv
   <view wx:if="{{ usediypage == false }}">
     <!--购买start-->
     <block>
-      <view class="fui-navbar bottom-buttons {{iphonexnavbar}}" style="height:87rpx;box-shadow:none">
+      <view class="fui-navbar bottom-buttons {{iphonexnavbar}}" style="height:87rpx;box-shadow:none;bottom:0px;">
         <view class='' style="width:100%;display:flex;flex-description:row;height:100%;">
           <navigator style="width:158rpx;background:#EC51B1;height:87rpx;padding-top:0rpx;" class="nav-item cart-item" id="menucart" url="/pages/member/cart/index" open-type="switchTab">
             <view data-cc="{{cartcount && limits}}">

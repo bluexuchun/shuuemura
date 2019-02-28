@@ -1,7 +1,7 @@
 <import src="/utils/wxParse/wxParse.wxml" />
 <!-- <view class="{{isIpx?'fui-iphonex-button':''}}"></view> -->
 <loading wx:if="{{ !show }}">加载中...</loading>
-<view class="page footer {{paddingb}}" wx:if="{{ show }}" style="padding-bottom:0rpx;">
+<view class="page footer {{paddingb}}" wx:if="{{ show }}" style="padding-bottom:100rpx;">
   <view class="nav" wx:if="{{ list.showTab && !list.isonlyverifygoods}}">
     <view class="{{ data.dispatchtype==0?'red':'default' }}" bindtap="dispatchtype" data-type="0">快递配送</view>
     <view class="{{ data.dispatchtype==1?'red':'default' }}" wx:if="{{ list.iscycelbuy != 1 }}" bindtap="dispatchtype" data-type="1">上门自提</view>
@@ -205,7 +205,7 @@
      
         <scroll-view  scroll-x="true"  style="background:#fff">
           <view class="scroll-extra-gift" style='padding:0;height:auto;min-height:auto'>
-            <view class="extra-gifts-item gifts-items" wx:for="{{gift.giftgoodsid}}" wx:for-index="idx" wx:key="{{item.id}}" data-list-type="extraGiftList" data-idx="{{idx}}" style='margin-right:40rpx;padding:0 0 20rpx;height:auto'>
+            <view class="extra-gifts-item gifts-items" wx:for="{{gift.giftgoodsid}}" wx:for-index="idx" wx:key="{{item.id}}" data-list-type="extraGiftList" data-idx="{{idx}}" style='margin-right:40rpx;padding:0 0 0rpx;height:auto'>
               <!-- <view wx:if="{{item.goods_number<=0}}" class="mask"></view> -->
               <view  style='width:150rpx;'>
                 <view class="top checkbox">
@@ -221,32 +221,63 @@
           </view>
         </scroll-view>
       </view>
-          <view class="gift-title extraGift" style='margin-top:57rpx;font-size:30rpx;text-align:center;height:auto;line-height:30rpx;border:none;'>
+          <!-- <view class="gift-title extraGift" style='margin-top:57rpx;font-size:30rpx;text-align:center;height:auto;line-height:30rpx;border:none;'>
              尊享满额礼
-          </view>
+          </view> -->
          <!-- <view style="margin-top:13rpx;font-size:18rpx;line-height:18rpx;display:{{gift.restnum == 'free' ? 'none' : ''}};text-align:center">
          再加购{{giftsuperlist[0].restnum}}元，可获得{{giftsuperlist[0].nextnum}}件体验礼
          </view> -->
     </view> 
 
+    <!-- 植村秀的赠品专属 -->
+    <view wx:if="{{zcxgiftlists.length > 0}}" class="gift-title extraGift" style='margin-top:57rpx;font-size:30rpx;text-align:center;height:auto;line-height:30rpx;border:none;'>尊享满额礼</view>
+    <view wx:if="{{zcxgiftlists.length > 0 && !zcxgifttips.ismax && ismin == 1}}" style="margin-top:13rpx;font-size:18rpx;line-height:18rpx;text-align:center;margin-bottom:20rpx;">
+      再购物满{{zcxgifttips.reduce}}元，臻享如下满额礼赠
+    </view>
+    <view wx:if="{{zcxgiftlists.length > 0 && !zcxgifttips.ismax && ismin != 1}}" style="margin-top:13rpx;font-size:18rpx;line-height:18rpx;text-align:center;margin-bottom:20rpx;">
+      再加购{{zcxgifttips.reduce}}元，可获得{{zcxgifttips.number}}件体验礼
+    </view>
+    <view wx:if="{{zcxgiftlists.length > 0 && zcxgifttips.ismax && ismin != 1}}" style="margin-top:13rpx;font-size:18rpx;line-height:18rpx;text-align:center;margin-bottom:20rpx;">
+      已购物满{{zcxgifttips.memony}}元，臻享如下礼遇
+    </view>
+    <view wx:if="{{zcxgiftlists.length > 0}}" style='background:#f4f4f4;padding-bottom:14rpx'>
+      <scroll-view scroll-x="true"  style="margin-bottom:10px;">
+        <view class="scroll-extra-gift" style='padding:0 30rpx 40rpx'>
+          <view class="extra-gifts-item gifts-items" wx:for="{{zcxgiftlists}}" wx:for-index="idx" wx:key="{{item.id}}" data-list-type="extraGiftList" data-idx="{{idx}}" style='margin-right:10rpx;padding:20rpx 0 20rpx;'>
+            <view wx:if="{{item.goods_number<=0}}" class="mask"></view>
+            <view data-list-type="{{index}}" data-idx="{{idx}}" bindtap="selectPro" style='width:150rpx;height:150rpx;'>
+              <view class="top checkbox" style="display:flex;flex-direction:column;justify-content:center;align-items:center;background:#fff;">
+                <image class="detail-img" src='{{item.thumb}}' mode='widthFix' style="width:100%;height:60px;"></image>
+              </view>
+              <view class='bottom' style='margin:auto;width:127rpx;text-align:center;display:flex;align-items:center;justify-content:center'>
+                {{item.title}}
+              </view>
+                <view style='text-align:center;color:#666;font-size:18rpx;margin-top:10rpx'>{{item.subtitle}}</view>
+            </view>
+          </view>
+        </view>
+      </scroll-view>
+      <!-- <template is="wxParse" data="{{wxParseData:gift.content.nodes}}"/> -->
+    </view>
+
 
 <!-- 尊享体验 -->
-    <view  wx:if="{{giftsuperlist.length > 0}}" style='background:#f4f4f4;padding-bottom:14rpx'>
-      <view   wx:for="{{giftsuperlist}}" wx:for-item="gift" style='margin-top:39rpx;'>
+    <!-- <view  wx:if="{{giftsuperlist.length > 0}}" style='background:#f4f4f4;padding-bottom:14rpx'>
+      <view   wx:for="{{giftsuperlist}}" wx:for-item="gift" style='margin-top:39rpx;'> -->
         <!-- <view class="gift-title extraGift">
           尊享体验礼
           <text class="active-notice" wx:if="{{gift.type == 1}}" style="display:{{gift.restnum == 'free' ? 'none' : ''}}">再加购{{gift.restnum}}件，可获得{{gift.nextnum}}件体验礼</text>
           <text class="active-notice" wx:elif="{{gift.type == 2}}" style="display:{{gift.restnum == 'free' ? 'none' : ''}}">再加购{{gift.restnum}}元，可获得{{gift.nextnum}}件体验礼</text>
         </view> -->
-        <scroll-view scroll-x="true"  style="margin-bottom:10px;">
+        <!-- <scroll-view scroll-x="true"  style="margin-bottom:10px;">
           <view class="scroll-extra-gift" style='padding:0 34rpx 40rpx 34rpx'>
             <view class="extra-gifts-item gifts-items" wx:for="{{gift.giftgoodsid}}" wx:for-index="idx" wx:key="{{item.id}}" data-list-type="extraGiftList" data-idx="{{idx}}" style='margin-right:10rpx;'>
               <view wx:if="{{item.goods_number<=0}}" class="mask"></view>
               <view data-list-type="{{index}}" data-idx="{{idx}}" bindtap="selectPro" style='width:150rpx;height:150rpx;'>
-                <view class="top checkbox">
+                <view class="top checkbox"> -->
                 <!-- <view class="top checkbox {{ item.selected == 'checked' ? 'checked': '' }}"> -->
                   <!-- <icon></icon> -->
-                  <image class="detail-img" src='{{item.thumb}}' mode='widthFix' style="width:100%;height:60px;"></image>
+                  <!-- <image class="detail-img" src='{{item.thumb}}' mode='widthFix' style="width:100%;height:60px;"></image>
                 </view>
                 <view class='bottom' style='margin:auto;width:127rpx;text-align:center;display:flex;align-items:center;justify-content:center'>
                   {{item.title}}
@@ -258,7 +289,9 @@
         </scroll-view>
         <template is="wxParse" data="{{wxParseData:gift.content.nodes}}"/>
       </view>
-    </view>
+    </view> -->
+
+
     
 <!-- 限时加享 -->
     <!-- <view class='extra-gifts {{ dzGiftList.minPrice > actualPrice ? "disabled" : "" }}' wx:if="{{dzGiftList.productList.length > 0}}">

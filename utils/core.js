@@ -94,7 +94,7 @@ module.exports = {
     },
     get: function (routes, args, callback, hasloading, session) {
       console.log('get', routes, args)
-        this.json(routes, args, callback, hasloading, false, session)
+        this.json(routes, args, callback, hasloading, true, session)
     },
     getDistanceByLnglat: function (lng1, lat1, lng2, lat2) {
         function rad(d) {
@@ -285,5 +285,17 @@ module.exports = {
             }
         });
         return obj;
+    },
+
+    /**
+     * 获取token值
+     */
+    getToken: function (page) {
+      this.get('auth/get_token', {
+        sessionid: wx.getStorageSync("sessionid")
+      }, function (data) {
+        console.log(data)
+        wx.setStorageSync("tokenId", data.token)
+      })
     }
 };
