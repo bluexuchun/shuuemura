@@ -60,21 +60,26 @@ Page({
     },
     getInfo: function(){
         var $this = this;
-        core.get('member', {}, function(result){
-          if (result.isblack == 1){
-            wx.showModal({
-              title: '无法访问',
-              content: '您在商城的黑名单中，无权访问！',
-              success: function (res) {
-                if (res.confirm) {
-                  $this.close()
+        core.get('auth/get_token', {
+          sessionid: wx.getStorageSync("sessionid")
+        }, function (data) {
+          wx.setStorageSync("tokenId", data.token)
+          let useropenid = wx.getStorageSync('tokenId') + app.getCache('userinfo_openid')
+          core.get('member', {sessionid: wx.getStorageSync('sessionid'), token: useropenid}, function(result){
+            if (result.isblack == 1){
+              wx.showModal({
+                title: '无法访问',
+                content: '您在商城的黑名单中，无权访问！',
+                success: function (res) {
+                  if (res.confirm) {
+                    $this.close()
+                  }
+                  if (res.cancel){
+                    $this.close()
+                  }
                 }
-                if (res.cancel){
-                  $this.close()
-                }
-              }
-            })
-          }
+              })
+            }
             if(result.error!=0){
               // $this.setData({ modelShow: true });
                 wx.redirectTo({
@@ -87,6 +92,7 @@ Page({
             }
             parser.wxParse('wxParseData','html', result.copyright,$this,'5');
         });
+      })
     },
     service:function(e){
       wx.makePhoneCall({

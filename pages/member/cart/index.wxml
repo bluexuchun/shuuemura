@@ -14,7 +14,7 @@
   </view>
 </view>
 <view style='margin-top:0rpx;border:{{ empty  ?"none":""}}'>
-  <view class="page footer-navbar" wx:if="{{ show }}" style='padding-bottom:0'>
+  <view class="page footer-navbar" wx:if="{{ show }}" style='padding-bottom:100rpx;'>
     
     <block wx:for="{{ merch_list }}" wx:key>
       <view class="fui-cell-group fui-cell-click">

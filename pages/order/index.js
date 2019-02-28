@@ -31,58 +31,61 @@ Page({
             status: options.status || ''
         });
         app.url(options);
-        core.get('auth/get_token', {
-          sessionid: wx.getStorageSync("sessionid")
-        }, function (data) {
-          wx.setStorageSync("tokenId", data.token)
-          $this.get_list();
-        })
+        $this.get_list();
     },
     get_list: function () {
         var $this = this;
         $this.setData({loading: true});
-        let useropenid = wx.getStorageSync('tokenId') + app.getCache('userinfo_openid')
-      core.get('order/get_list', { page: $this.data.page, status: $this.data.status, merchid: 0, sessionid: wx.getStorageSync('sessionid'), token: useropenid}, function (list) {
-          console.log(list);
-            if (list.error==0){
-                list.list.map((v,i) =>{
-                  v.price = parseInt(v.price)
-                })
-                $this.setData({loading:false,show:true,total:list.total,empty:true});
-                if(list.list.length>0){
-                    $this.setData({
-                        page: $this.data.page+1,
-                        list: $this.data.list.concat(list.list)
-                    });
+        core.get('auth/get_token', {
+          sessionid: wx.getStorageSync("sessionid")
+        }, function (data) {
+          wx.setStorageSync("tokenId", data.token)
+          let useropenid = wx.getStorageSync('tokenId') + app.getCache('userinfo_openid')
+          core.get('order/get_list', { page: $this.data.page, status: $this.data.status, merchid: 0, sessionid: wx.getStorageSync('sessionid'), token: useropenid}, function (list) {
+              console.log(list);
+                if (list.error==0){
+                    list.list.map((v,i) =>{
+                      v.price = parseInt(v.price)
+                    })
+                    $this.setData({loading:false,show:true,total:list.total,empty:true});
+                    if(list.list.length>0){
+                        $this.setData({
+                            page: $this.data.page+1,
+                            list: $this.data.list.concat(list.list)
+                        });
+                    }
+                    if(list.list.length<list.pagesize) {
+                        $this.setData({
+                            loaded: true
+                        });
+                    }
+                }else{
+                    core.toast(list.message,'loading')
                 }
-                if(list.list.length<list.pagesize) {
-                    $this.setData({
-                        loaded: true
-                    });
-                }
-            }else{
-                core.toast(list.message,'loading')
-            }
-        },this.data.show);
-      console.log($this.data.list);
+            },$this.data.show);
+        })
     },
 
   get_updata_list: function () {
     var $this = this;
     $this.setData({ loading: true });
-    core.get('order/get_list', { page: 1, status: $this.data.status, merchid: 0 }, function (list) {
-      console.log(list);
-      if (list.error == 0) {
-        $this.setData({ loading: false, show: true, total: list.total, empty: true });
-        if (list.list.length > 0) {
-          $this.setData({
-            list: list.list
-          });
+    core.get('auth/get_token', {
+      sessionid: wx.getStorageSync("sessionid")
+    }, function (data) {
+      wx.setStorageSync("tokenId", data.token)
+      let useropenid = wx.getStorageSync('tokenId') + app.getCache('userinfo_openid')
+      core.get('order/get_list', { page: 1, status: $this.data.status, merchid: 0, sessionid: wx.getStorageSync('sessionid'), token: useropenid}, function (list) {
+        console.log(list);
+        if (list.error == 0) {
+          $this.setData({ loading: false, show: true, total: list.total, empty: true });
+          if (list.list.length > 0) {
+            $this.setData({
+              list: list.list
+            });
+          }
         }
-        
-      }
-    });
-    console.log($this.data.list);
+      });
+    })
   },
     selected: function (e) {
         var status = core.data(e).type;
@@ -142,54 +145,27 @@ Page({
     var id=e.target.dataset.id;
     var did=e.target.dataset.did;
     var $this=this;
-    // $this.get_updata_list(); //刷新页面
-    var payinfo=list[did].payinfo.payinfo;
-    // core.post('order/create/submit', {id:id}, function (ret) {
-      // $this.setData({
-      //   submit: false
-      // }); 
-      // if (ret.error != 0) {
-      //   core.alert(ret.message);
-      //   return;
-      // } else {
-        // console.log(ret)
-        // if (ret.wechat.success) {
-          core.pay(payinfo, function (res) {
-            if (res.errMsg == "requestPayment:ok") {
-              $this.get_updata_list(); //刷新页面
-                    var date = new Date()
-                    // sensors.setOnceProfile({
-                    //   first_order_time: util.formatTime(date)
-                    // })
-                    // sensors.setProfile({
-                    //   latest_order_time: util.formatTime(date)
-                    // })
-                //  app.sensors.track('PayOrder', {
-                //     order_id: list[did].id ,
-                //     product_id_list: list[did].nogift,
-                //     order_name: list[did].goods[0].title,
-                //     gender: wx.getStorageSync("userInfo").gender == 1 ? "男" : "女",
-                //     order_phone: wx.getStorageSync("address").telNumber,
-                //     order_province: wx.getStorageSync("address").userName,
-                //     order_city: wx.getStorageSync("address").cityName,
-                //     order_district: wx.getStorageSync("address").detailInfo,
-                //     order_address: wx.getStorageSync("address").full_region,
-                //     order_price: list[did].goods[0].price,
-                //     transp_cost: "",
-                //     service_cost: "",
-                // });
-             
-              // $this.complete(type)
-              // $this.setData({coupon: true})
-              // wx.navigateTo({
-              // url:'/pages/order/pay/index?id='+res.orderid
-              // });
-            }
-          });
-        // }
-      // }
 
-    // }, true)
+    var payinfo=list[did].payinfo.payinfo;
+    core.post('order/pay/checkstock', { id: id }, function (check_json) {
+      if (check_json.error != 0) {
+        foxui.toast($this, check_json.message);
+        return;
+      }
+      core.pay(payinfo, function (res) {
+        if (res.errMsg == "requestPayment:ok") {
+          // core.get('order/paysend',{ id: id}, function (res) {
+          //   console.log(res)
+          // })
+
+          wx.navigateTo({
+            url: '/pages/order/detail/index?id='+id,
+          })
+          // 刷新页面
+          // $this.get_updata_list(); 
+        }
+      });
+    }, true, true)
   },
   checkexpress: function (e) {
     let expressid = e.currentTarget.dataset.id

@@ -98,15 +98,21 @@ App({
         })
       }
 
-      core.get('member', {}, function (ret) {
-        if (ret.error) {
-          wx.navigateTo({
-            url: url
-          })
-          // wx.redirectTo({
-          //   url: url,
-          // })
-        }
+      core.get('auth/get_token', {
+        sessionid: wx.getStorageSync("sessionid")
+      }, function (data) {
+        wx.setStorageSync("tokenId", data.token)
+        let useropenid = wx.getStorageSync('tokenId') + app.getCache('userinfo_openid')
+        core.get('member', { sessionid: wx.getStorageSync('sessionid'), token: useropenid}, function (ret) {
+          if (ret.error) {
+            wx.navigateTo({
+              url: url
+            })
+            // wx.redirectTo({
+            //   url: url,
+            // })
+          }
+        })
       })
     },
     requirejs: function (jsname) {

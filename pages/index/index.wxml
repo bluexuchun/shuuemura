@@ -3,7 +3,7 @@
 <loading wx:if="{{loading}}">加载中...</loading>
 <!-- <view class="page"  style="height:auto;background:url({{diypages.page.backgroundUrl}})repeat-y;background-size:100% auto;" wx:else> -->
 <view class="page"  style="height:auto;background:url({{diypages.page.backgroundUrl}})repeat-y;background-size:100% auto;background:{{diypages.page.background}}" wx:else>
-    <include src="coupontips.wxml"/>
+    <!-- <include src="coupontips.wxml"/> -->
   
       <view wx:if='{{diypages.page.type==2}}'>
         <include src="/pages/diy/index.wxml"/>
